@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 exports.registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // Check if existing user
     const existingUser = await User.findOne({ email });
@@ -16,31 +16,30 @@ exports.registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // Validate role (only allow 'user' or 'admin')
+    const userRole = role && (role === 'admin' || role === 'user') ? role : 'user';
+
     // Create user
     const newUser = await User.create({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      role: userRole
     });
-
-    // Generate token
-    // Set default role = "user"
-    const role = newUser.role || "user";
 
     // Generate token with role
     const token = jwt.sign(
-    { id: newUser._id, role },
-    process.env.JWT_SECRET,
-    { expiresIn: "1d" }
+      { id: newUser._id, role: newUser.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
     );
 
     // Return token + user info
     return res.status(201).json({
-    token,
-    email: newUser.email,
-    role
+      token,
+      email: newUser.email,
+      role: newUser.role
     });
-
 
   } catch (error) {
     console.error("Register Error:", error);

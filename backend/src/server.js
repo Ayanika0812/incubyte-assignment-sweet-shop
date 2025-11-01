@@ -14,9 +14,11 @@ app.use(express.json());
 // Routes
 const authRoutes = require("./routes/authRoutes");
 const sweetRoutes = require("./routes/sweetRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/sweets", sweetRoutes);
+app.use("/api/orders", orderRoutes);
 
 // Connect MongoDB
 mongoose.connect(process.env.MONGO_URI)
