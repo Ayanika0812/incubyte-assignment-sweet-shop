@@ -46,3 +46,26 @@ A full-stack Sweet Shop Management System built as part of the **Incubyte Techni
 
 ## 📂 Project Structure
 
+sweet-shop/
+├── backend/
+│ ├── src/
+│ ├── tests/
+│ └── package.json
+├── frontend/
+│ ├── src/
+│ └── package.json
+├── README.md
+
+
+---
+
+## 🚀 Setup & Installation
+
+### 1️⃣ Clone Repository
+```bash
+git clone https://github.com/Ayanika0812/incubyte-assignment-sweet-shop.git
+cd incubyte-assignment-sweet-shop ```
+
+### 2️⃣ Backend Setup
+cd backend
+npm install
