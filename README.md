@@ -83,7 +83,7 @@ sweet-shop/
 
 1. **Clone the repository**
 ```bash
-git clone <your-repo-url>
+git clone (https://github.com/Ayanika0812/incubyte-assignment-sweet-shop/tree/main)
 cd sweet-shop
 ```
 
