@@ -7,6 +7,11 @@ const cors = require("cors");
 // Initialize app
 const app = express();
 
+// ✅ Root route
+app.get("/", (req, res) => {
+  res.send("🍬 Sweet Shop API is running!");
+});
+
 // Middleware
 app.use(cors({
   origin: [
