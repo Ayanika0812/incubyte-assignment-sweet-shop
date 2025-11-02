@@ -7,6 +7,7 @@ export { default as LoadingSpinner } from './ui/LoadingSpinner';
 export { default as SearchBar } from './ui/SearchBar';
 export { default as EmptyState } from './ui/EmptyState';
 export { default as Toggle } from './ui/Toggle';
+export { default as ImageUpload } from './ui/ImageUpload';
 
 // Layout Components
 export { default as Layout } from './layout/Layout';
@@ -20,6 +21,7 @@ export { default as SweetGrid } from './sweet/SweetGrid';
 // Admin Components
 export { default as AdminSweetCard } from './admin/AdminSweetCard';
 export { default as AddSweetForm } from './admin/AddSweetForm';
+export { default as EditSweetModal } from './admin/EditSweetModal';
 
 // Cart Components
 export { default as CartIcon } from './cart/CartIcon';

@@ -42,9 +42,25 @@ const SweetCard = ({ sweet, onPurchase, showActions = true, showCartActions = tr
   return (
     <Card hover className="overflow-hidden group">
       <Card.Content className="p-0">
-        {/* Sweet Image Placeholder */}
+        {/* Sweet Image */}
         <div className="h-48 bg-gradient-to-br from-pink-200 via-rose-200 to-purple-200 flex items-center justify-center relative overflow-hidden">
-          <div className="text-center transform group-hover:scale-110 transition-transform duration-300">
+          {sweet.image ? (
+            <img
+              src={`${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}${sweet.image}`}
+              alt={sweet.name}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              onError={(e) => {
+                // Fallback to emoji if image fails to load
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'flex';
+              }}
+            />
+          ) : null}
+          
+          {/* Fallback emoji display */}
+          <div 
+            className={`text-center transform group-hover:scale-110 transition-transform duration-300 ${sweet.image ? 'hidden' : 'flex'} flex-col items-center justify-center absolute inset-0`}
+          >
             <div className="text-6xl mb-2 animate-bounce">
               {getCategoryEmoji(sweet.category)}
             </div>

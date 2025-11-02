@@ -34,10 +34,15 @@ export default function Register() {
     setLoading(true);
     
     try {
-      await API.post("/auth/register", form);
+      console.log("📝 Submitting registration form:", form);
+      const response = await API.post("/auth/register", form);
+      console.log("✅ Registration successful:", response.data);
       toast.success("Account created successfully! Please sign in. 🎉");
       navigate("/login");
     } catch (err) {
+      console.error("❌ Registration error:", err);
+      console.error("Error response:", err.response?.data);
+      console.error("Error status:", err.response?.status);
       toast.error(err.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);

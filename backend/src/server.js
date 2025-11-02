@@ -9,16 +9,15 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    process.env.FRONTEND_URL || "https://your-frontend.vercel.app"
-  ],
+  origin: true, // Allow all origins for debugging
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
+
+// Serve static files (uploaded images)
+app.use('/uploads', express.static('uploads'));
 
 // Routes
 const authRoutes = require("./routes/authRoutes");

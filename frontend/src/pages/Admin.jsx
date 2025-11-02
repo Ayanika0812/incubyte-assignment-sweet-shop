@@ -6,11 +6,14 @@ import Layout from "../components/layout/Layout";
 import Button from "../components/ui/Button";
 import AddSweetForm from "../components/admin/AddSweetForm";
 import AdminSweetCard from "../components/admin/AdminSweetCard";
+import EditSweetModal from "../components/admin/EditSweetModal";
 
 export default function Admin() {
   const navigate = useNavigate();
   const [sweets, setSweets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editingSweet, setEditingSweet] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const fetchSweets = async () => {
     try {
@@ -30,7 +33,12 @@ export default function Admin() {
 
   const addSweet = async (sweetData) => {
     try {
-      await API.post("/sweets", sweetData);
+      // Handle both FormData (with image) and regular object
+      const config = sweetData instanceof FormData 
+        ? { headers: { 'Content-Type': 'multipart/form-data' } }
+        : {};
+        
+      await API.post("/sweets", sweetData, config);
       toast.success("Sweet added successfully! 🍬");
       fetchSweets();
     } catch (e) {
@@ -58,6 +66,26 @@ export default function Admin() {
       fetchSweets();
     } catch (e) {
       toast.error(e.response?.data?.message || "Restock failed");
+    }
+  };
+
+  const handleEditSweet = (sweet) => {
+    setEditingSweet(sweet);
+    setIsEditModalOpen(true);
+  };
+
+  const updateSweet = async (id, sweetData) => {
+    try {
+      const config = sweetData instanceof FormData 
+        ? { headers: { 'Content-Type': 'multipart/form-data' } }
+        : {};
+        
+      await API.put(`/sweets/${id}`, sweetData, config);
+      toast.success("Sweet updated successfully! ✅");
+      fetchSweets();
+    } catch (e) {
+      toast.error(e.response?.data?.message || "Error updating sweet");
+      throw e;
     }
   };
 
@@ -148,11 +176,23 @@ export default function Admin() {
                   sweet={sweet}
                   onDelete={deleteSweet}
                   onRestock={restockSweet}
+                  onEdit={handleEditSweet}
                 />
               ))}
             </div>
           )}
         </div>
+
+        {/* Edit Sweet Modal */}
+        <EditSweetModal
+          sweet={editingSweet}
+          isOpen={isEditModalOpen}
+          onClose={() => {
+            setIsEditModalOpen(false);
+            setEditingSweet(null);
+          }}
+          onUpdate={updateSweet}
+        />
       </div>
     </Layout>
   );

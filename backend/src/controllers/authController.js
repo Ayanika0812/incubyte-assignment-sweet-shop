@@ -6,11 +6,21 @@ const jwt = require("jsonwebtoken");
 
 exports.registerUser = async (req, res) => {
   try {
+    console.log("📝 Registration request received:", req.body);
     const { name, email, password, role } = req.body;
+
+    // Validate required fields
+    if (!name || !email || !password) {
+      console.log("❌ Missing required fields");
+      return res.status(400).json({ message: "Name, email, and password are required" });
+    }
 
     // Check if existing user
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: "User already exists" });
+    if (existingUser) {
+      console.log("❌ User already exists:", email);
+      return res.status(400).json({ message: "User already exists" });
+    }
 
     // Hash password
     const salt = await bcrypt.genSalt(10);
@@ -20,6 +30,7 @@ exports.registerUser = async (req, res) => {
     const userRole = role && (role === 'admin' || role === 'user') ? role : 'user';
 
     // Create user
+    console.log("👤 Creating user with role:", userRole);
     const newUser = await User.create({
       name,
       email,
@@ -27,12 +38,16 @@ exports.registerUser = async (req, res) => {
       role: userRole
     });
 
+    console.log("✅ User created successfully:", newUser.email);
+
     // Generate token with role
     const token = jwt.sign(
       { id: newUser._id, role: newUser.role },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
+
+    console.log("🔑 Token generated for user:", newUser.email);
 
     // Return token + user info
     return res.status(201).json({

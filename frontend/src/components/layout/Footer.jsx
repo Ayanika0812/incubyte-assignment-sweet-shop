@@ -34,8 +34,8 @@ const Footer = () => {
           <div className="text-center md:text-right">
             <h4 className="font-semibold text-gray-900 mb-4">Get in Touch</h4>
             <div className="space-y-2 text-sm text-gray-600">
-              <div>📧 hello@sweetshop.com</div>
-              <div>📱 +1 (555) 123-4567</div>
+              <div>📧 contactayanika@gmail.com</div>
+              <div>📱 +91 8700235893</div>
               <div>📍 123 Sweet Street, Candy City</div>
               <div className="flex justify-center md:justify-end space-x-3 mt-4">
                 <span className="text-lg">🐦</span>
@@ -48,7 +48,7 @@ const Footer = () => {
 
         <div className="border-t border-pink-200 mt-8 pt-6 text-center">
           <p className="text-sm text-gray-500">
-            © 2024 Sweet Shop. Made with ❤️ and lots of sugar. All rights reserved.
+            © 2025 Sweet Shop. Made with ❤️ and lots of sugar. All rights reserved.
           </p>
         </div>
       </div>

@@ -1,19 +1,34 @@
 const Sweet = require("../models/Sweet");
+const fs = require('fs');
+const path = require('path');
 
 exports.addSweet = async (req, res) => {
   try {
     const { name, category, price, quantity } = req.body;
+    
+    // Handle image upload
+    let imageUrl = null;
+    if (req.file) {
+      imageUrl = `/uploads/${req.file.filename}`;
+    }
 
     const sweet = await Sweet.create({
       name,
       category,
       price,
-      quantity
+      quantity,
+      image: imageUrl
     });
 
     return res.status(201).json(sweet);
   } catch (error) {
     console.error("Add Sweet Error:", error);
+    // Clean up uploaded file if sweet creation fails
+    if (req.file) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error("Error deleting file:", err);
+      });
+    }
     return res.status(500).json({ message: "Server error" });
   }
 };
@@ -55,20 +70,40 @@ exports.searchSweets = async (req, res) => {
 exports.updateSweet = async (req, res) => {
   try {
     const { id } = req.params;
+    
+    const existingSweet = await Sweet.findById(id);
+    if (!existingSweet) {
+      return res.status(404).json({ message: "Sweet not found" });
+    }
+
+    // Handle image upload
+    let updateData = { ...req.body };
+    if (req.file) {
+      // Delete old image if it exists
+      if (existingSweet.image) {
+        const oldImagePath = path.join(__dirname, '../../', existingSweet.image);
+        fs.unlink(oldImagePath, (err) => {
+          if (err) console.error("Error deleting old image:", err);
+        });
+      }
+      updateData.image = `/uploads/${req.file.filename}`;
+    }
 
     const updatedSweet = await Sweet.findByIdAndUpdate(
       id,
-      req.body,
-      { new: true } // return updated document
+      updateData,
+      { new: true }
     );
-
-    if (!updatedSweet) {
-      return res.status(404).json({ message: "Sweet not found" });
-    }
 
     return res.status(200).json(updatedSweet);
   } catch (error) {
     console.error("Update Sweet Error:", error);
+    // Clean up uploaded file if update fails
+    if (req.file) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error("Error deleting file:", err);
+      });
+    }
     return res.status(500).json({ message: "Server error" });
   }
 };
@@ -77,12 +112,20 @@ exports.deleteSweet = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const deletedSweet = await Sweet.findByIdAndDelete(id);
-
-    if (!deletedSweet) {
+    const sweet = await Sweet.findById(id);
+    if (!sweet) {
       return res.status(404).json({ message: "Sweet not found" });
     }
 
+    // Delete associated image file
+    if (sweet.image) {
+      const imagePath = path.join(__dirname, '../../', sweet.image);
+      fs.unlink(imagePath, (err) => {
+        if (err) console.error("Error deleting image:", err);
+      });
+    }
+
+    await Sweet.findByIdAndDelete(id);
     return res.status(200).json({ message: "Sweet deleted" });
   } catch (error) {
     console.error("Delete Sweet Error:", error);

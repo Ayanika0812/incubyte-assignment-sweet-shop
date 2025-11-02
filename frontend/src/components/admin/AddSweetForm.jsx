@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 import Card from '../ui/Card';
+import ImageUpload from '../ui/ImageUpload';
 
 const AddSweetForm = ({ onAddSweet }) => {
   const [form, setForm] = useState({
@@ -11,6 +12,7 @@ const AddSweetForm = ({ onAddSweet }) => {
     quantity: '',
   });
   
+  const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -22,15 +24,22 @@ const AddSweetForm = ({ onAddSweet }) => {
     setLoading(true);
     
     try {
-      await onAddSweet({
-        name: form.name,
-        category: form.category,
-        price: Number(form.price),
-        quantity: Number(form.quantity),
-      });
+      // Create FormData for file upload
+      const formData = new FormData();
+      formData.append('name', form.name);
+      formData.append('category', form.category);
+      formData.append('price', Number(form.price));
+      formData.append('quantity', Number(form.quantity));
+      
+      if (selectedImage) {
+        formData.append('image', selectedImage);
+      }
+      
+      await onAddSweet(formData);
       
       // Reset form
       setForm({ name: '', category: '', price: '', quantity: '' });
+      setSelectedImage(null);
     } finally {
       setLoading(false);
     }
@@ -47,7 +56,7 @@ const AddSweetForm = ({ onAddSweet }) => {
       </Card.Header>
       
       <Card.Content>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
               name="name"
@@ -94,6 +103,13 @@ const AddSweetForm = ({ onAddSweet }) => {
               required
             />
           </div>
+
+          {/* Image Upload */}
+          <ImageUpload
+            label="Sweet Image"
+            onImageSelect={setSelectedImage}
+            disabled={loading}
+          />
           
           <Button
             type="submit"

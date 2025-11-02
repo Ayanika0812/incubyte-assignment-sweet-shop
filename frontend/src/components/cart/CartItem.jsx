@@ -37,8 +37,21 @@ const CartItem = ({ item }) => {
   return (
     <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border border-pink-100 shadow-sm">
       {/* Item Image/Icon */}
-      <div className="w-16 h-16 bg-gradient-to-br from-pink-200 via-rose-200 to-purple-200 rounded-xl flex items-center justify-center">
-        <span className="text-2xl">{getCategoryEmoji(item.category)}</span>
+      <div className="w-16 h-16 bg-gradient-to-br from-pink-200 via-rose-200 to-purple-200 rounded-xl flex items-center justify-center overflow-hidden">
+        {item.image ? (
+          <img
+            src={`${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}${item.image}`}
+            alt={item.name}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'flex';
+            }}
+          />
+        ) : null}
+        <span className={`text-2xl ${item.image ? 'hidden' : 'flex'} items-center justify-center absolute inset-0`}>
+          {getCategoryEmoji(item.category)}
+        </span>
       </div>
 
       {/* Item Details */}
