@@ -1,161 +1,214 @@
-# incubyte-assignment-sweet-shop  
-# 🍬 Incubyte Sweet Shop – MERN Application
+# Sweet Shop Management System
 
-A full-stack Sweet Shop Management System built as part of the **Incubyte Technical Assessment**, following **Test-Driven Development (TDD)**.
+A modern, full-stack sweet shop application built with the MERN stack. This project implements a complete e-commerce solution for a sweet shop with user authentication, shopping cart functionality, and admin management features.
 
----
+## 🚀 Features
 
-## ✅ Features
+### 🔐 Authentication & Authorization
+- **User Registration**: Choose between regular user or admin account during signup
+- **JWT Authentication**: Secure login/logout with token-based auth
+- **Role-based Access**: Different features for users and admins
 
-### 👥 Authentication
-- User Registration & Login (JWT Auth)
-- Role-based Access (Admin & User)
-
-### 🧁 User Features
-- View all sweets
-- Search sweets
-- Purchase sweets (button disables if stock = 0)
+### 🛒 Shopping Experience
+- **Browse Sweets**: Beautiful grid layout with sweet categories and pricing
+- **Real-time Search**: Instant search functionality with live results
+- **Shopping Cart**: Add items, manage quantities, persistent cart storage
+- **Order Management**: Place orders, view order history with detailed breakdowns
+- **Stock Validation**: Prevents ordering more than available stock
 
 ### 👑 Admin Features
-- Add new sweets
-- Restock sweets
-- Delete sweets
-- Manage inventory in real-time
+- **Inventory Management**: Add, edit, delete sweets from inventory
+- **Stock Control**: Restock items and monitor inventory levels
+- **Order Oversight**: View and manage all customer orders
+- **Dashboard Analytics**: Track inventory stats and low stock alerts
 
-### 🧪 Test-Driven Development
-- Backend unit tests using **Jest**
-- API tests using **Supertest**
-- Coverage includes:
-  - Authentication
-  - Sweet CRUD
-  - Purchase & quantity update logic
+### 🎨 Modern UI/UX
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **Beautiful Components**: Custom-built UI components with Tailwind CSS
+- **Smooth Animations**: Hover effects, transitions, and loading states
+- **Toast Notifications**: Real-time feedback for user actions
 
----
+## 🛠️ Tech Stack
 
-## 🏗️ Tech Stack
+**Frontend:**
+- React 19 with modern hooks
+- Tailwind CSS for styling
+- React Router for navigation
+- Axios for API calls
+- React Hot Toast for notifications
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React, Tailwind CSS, Axios, Vite |
-| Backend | Node.js, Express.js |
-| Database | MongoDB Atlas |
-| Auth | JWT + bcrypt |
-| Testing | Jest + Supertest |
+**Backend:**
+- Node.js & Express.js
+- MongoDB with Mongoose
+- JWT for authentication
+- bcrypt for password hashing
+- CORS for cross-origin requests
 
----
+**Development:**
+- Vite for fast development
+- Nodemon for auto-restart
+- ESLint for code quality
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```
 sweet-shop/
-├── backend/
-│   ├── src/
-│   ├── tests/
-│   └── package.json
 ├── frontend/
 │   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── pages/         # Application pages
+│   │   ├── context/       # React context providers
+│   │   ├── utils/         # Utility functions
+│   │   └── api/           # API configuration
+│   └── package.json
+├── backend/
+│   ├── src/
+│   │   ├── controllers/   # Route handlers
+│   │   ├── models/        # Database models
+│   │   ├── routes/        # API routes
+│   │   ├── middleware/    # Custom middleware
+│   │   └── tests/         # Test files
 │   └── package.json
 └── README.md
 ```
 
----
+## 🚀 Getting Started
 
-## 🚀 Setup & Installation
+### Prerequisites
+- Node.js (v18 or higher)
+- MongoDB (local or Atlas)
+- Git
 
-### 1️⃣ Clone Repository
+### Installation
+
+1. **Clone the repository**
 ```bash
-git clone https://github.com/Ayanika0812/incubyte-assignment-sweet-shop.git
-cd incubyte-assignment-sweet-shop
+git clone <your-repo-url>
+cd sweet-shop
 ```
 
-### 2️⃣ Backend Setup
+2. **Backend Setup**
 ```bash
 cd backend
 npm install
 ```
 
-Create `.env` in backend folder:
-```
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=sweetsecretkey
+Create a `.env` file in the backend directory:
+```env
+MONGO_URI=mongodb://localhost:27017/sweetshop
+JWT_SECRET=your_jwt_secret_key
 PORT=5000
+NODE_ENV=development
 ```
 
-Start backend:
+Start the backend server:
 ```bash
 npm run dev
 ```
 
----
-
-### 3️⃣ Frontend Setup
+3. **Frontend Setup**
 ```bash
 cd ../frontend
 npm install
 npm run dev
 ```
 
-Frontend runs at:  
-`http://localhost:5173/`
+The application will be available at:
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:5000
 
-Backend runs at:  
-`http://localhost:5000/`
+## 🧪 Testing
 
----
-
-## 🧪 Run Tests (TDD)
-
+Run the test suite:
 ```bash
 cd backend
 npm test
 ```
 
-✅ Auth Tests  
-✅ Sweet CRUD Tests  
-✅ Purchase Flow Tests  
+Tests cover:
+- Authentication endpoints
+- Sweet CRUD operations
+- Order management
+- Middleware functionality
+
+## 📱 Usage
+
+### For Users:
+1. Register for an account (choose user or admin role)
+2. Browse the sweet collection
+3. Add items to your cart
+4. Place orders and track order history
+
+### For Admins:
+1. Access the admin panel from the header
+2. Add new sweets to inventory
+3. Manage stock levels and restock items
+4. View and manage customer orders
+
+## 🔧 API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+
+### Sweets
+- `GET /api/sweets` - Get all sweets
+- `GET /api/sweets/search` - Search sweets
+- `POST /api/sweets` - Add sweet (Admin)
+- `PUT /api/sweets/:id` - Update sweet (Admin)
+- `DELETE /api/sweets/:id` - Delete sweet (Admin)
+- `POST /api/sweets/:id/purchase` - Purchase sweet
+- `POST /api/sweets/:id/restock` - Restock sweet (Admin)
+
+### Orders
+- `POST /api/orders` - Create order
+- `GET /api/orders/my-orders` - Get user orders
+- `GET /api/orders/:id` - Get order by ID
+- `GET /api/orders/admin/all` - Get all orders (Admin)
+
+## 🎨 Component Architecture
+
+The frontend uses a modular component architecture:
+
+- **UI Components**: Reusable components (Button, Input, Card, etc.)
+- **Layout Components**: Header, Footer, Layout wrapper
+- **Feature Components**: Sweet cards, cart items, admin forms
+- **Pages**: Complete page components with business logic
+
+## 🔒 Security Features
+
+- JWT token authentication
+- Password hashing with bcrypt
+- Role-based access control
+- Input validation and sanitization
+- CORS configuration
+- Protected API routes
+
+## 🚀 Deployment
+
+The application is ready for deployment on platforms like:
+- **Frontend**: Vercel, Netlify
+- **Backend**: Heroku, Railway, DigitalOcean
+- **Database**: MongoDB Atlas
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👨‍💻 Author
+
+**Your Name**
+- GitHub: [@yourusername](https://github.com/Ayanika0812)
+- LinkedIn: [Your LinkedIn](https://linkedin.com/in/ayanika-paul)
 
 ---
 
-## 👑 Make a User Admin
-
-In MongoDB Atlas:
-
-```js
-db.users.updateOne(
-  { email: "your-email@example.com" },
-  { $set: { role: "admin" } }
-)
-```
-
----
-
-## 📸 Screenshots
-> (Screenshots will be added later)
-
-- Login Page  
-- Dashboard (User)  
-- Admin Panel  
-- Jest Test Results ✅  
-
----
-
-## ✅ Summary
-
-This project satisfies all Incubyte assessment requirements:
-
-- MERN SPA ✅  
-- JWT Auth & Role Based Access ✅  
-- CRUD + Search + Purchase Workflow ✅  
-- Test-Driven Development (Jest + Supertest) ✅  
-- Clean UI + Tailwind ✅  
-
----
-
-### 👩‍💻 Developed By  
-**Ayanika Paul**
-
-B.Tech | MIT Manipal | MERN Developer  
-
----
-
-✨ Thank you, Incubyte!
+Built with ❤️ using the MERN stack
