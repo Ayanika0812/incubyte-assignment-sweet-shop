@@ -60,10 +60,6 @@ A modern, full-stack sweet shop application built with the MERN stack. This proj
 </div>
 <p align="center"><em>Cart sidebar for quick access & detailed cart page with order summary</em></p>
 
-<div align="center">
-  <img src="screenshots/order-history.png" alt="Order History" width="90%">
-</div>
-<p align="center"><em>Comprehensive order history with detailed breakdowns</em></p>
 
 ### 👑 Admin Experience
 
