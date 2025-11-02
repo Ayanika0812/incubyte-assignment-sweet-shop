@@ -1,4 +1,0 @@
-Terminal 
-    npm init -y
-    npm install express mongoose bcrypt jsonwebtoken dotenv
-    npm install --save-dev jest supertest nodemon

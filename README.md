@@ -83,7 +83,11 @@ sweet-shop/
 
 1. **Clone the repository**
 ```bash
+<<<<<<< HEAD
 git clone <your-repo-url>
+=======
+git clone (https://github.com/Ayanika0812/incubyte-assignment-sweet-shop/tree/main)
+>>>>>>> 0466f1a76cd39b9a6ef873bc6aff192e2e530eb8
 cd sweet-shop
 ```
 
@@ -130,9 +134,91 @@ Tests cover:
 - Sweet CRUD operations
 - Order management
 - Middleware functionality
+<<<<<<< HEAD
+=======
 
 ## 📱 Usage
 
+### For Users:
+1. Register for an account (choose user or admin role)
+2. Browse the sweet collection
+3. Add items to your cart
+4. Place orders and track order history
+
+### For Admins:
+1. Access the admin panel from the header
+2. Add new sweets to inventory
+3. Manage stock levels and restock items
+4. View and manage customer orders
+
+## 🔧 API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+
+### Sweets
+- `GET /api/sweets` - Get all sweets
+- `GET /api/sweets/search` - Search sweets
+- `POST /api/sweets` - Add sweet (Admin)
+- `PUT /api/sweets/:id` - Update sweet (Admin)
+- `DELETE /api/sweets/:id` - Delete sweet (Admin)
+- `POST /api/sweets/:id/purchase` - Purchase sweet
+- `POST /api/sweets/:id/restock` - Restock sweet (Admin)
+
+### Orders
+- `POST /api/orders` - Create order
+- `GET /api/orders/my-orders` - Get user orders
+- `GET /api/orders/:id` - Get order by ID
+- `GET /api/orders/admin/all` - Get all orders (Admin)
+
+## 🎨 Component Architecture
+
+The frontend uses a modular component architecture:
+
+- **UI Components**: Reusable components (Button, Input, Card, etc.)
+- **Layout Components**: Header, Footer, Layout wrapper
+- **Feature Components**: Sweet cards, cart items, admin forms
+- **Pages**: Complete page components with business logic
+
+## 🔒 Security Features
+
+- JWT token authentication
+- Password hashing with bcrypt
+- Role-based access control
+- Input validation and sanitization
+- CORS configuration
+- Protected API routes
+
+## 🚀 Deployment
+
+The application is ready for deployment on platforms like:
+- **Frontend**: Vercel, Netlify
+- **Backend**: Heroku, Railway, DigitalOcean
+- **Database**: MongoDB Atlas
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👨‍💻 Author
+
+**Your Name**
+- GitHub: [@yourusername](https://github.com/Ayanika0812)
+- LinkedIn: [Your LinkedIn](https://linkedin.com/in/ayanika-paul)
+>>>>>>> 0466f1a76cd39b9a6ef873bc6aff192e2e530eb8
+
+## 📱 Usage
+
+<<<<<<< HEAD
 ### For Users:
 1. Register for an account (choose user or admin role)
 2. Browse the sweet collection
@@ -239,4 +325,6 @@ This project is licensed under the MIT License.
 
 ---
 
+=======
+>>>>>>> 0466f1a76cd39b9a6ef873bc6aff192e2e530eb8
 Built with ❤️ using the MERN stack
