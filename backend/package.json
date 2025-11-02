@@ -4,7 +4,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "test": "jest --runInBand"
+    "start": "node src/server.js",
+    "test": "jest --runInBand",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel"
   },
   "jest": {
     "testEnvironment": "node",

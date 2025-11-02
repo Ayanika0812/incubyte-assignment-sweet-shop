@@ -8,7 +8,16 @@ const cors = require("cors");
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    process.env.FRONTEND_URL || "https://your-frontend.vercel.app"
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 // Routes
@@ -25,13 +34,13 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.log("❌ MongoDB Error:", err));
 
-// Start Server (only if not testing)
-if (process.env.NODE_ENV !== "test") {
+// Start Server (only if not testing and not in Vercel)
+if (process.env.NODE_ENV !== "test" && !process.env.VERCEL) {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () =>
     console.log(`🚀 Server running on port ${PORT}`)
   );
 }
 
-// Export app for tests
+// Export app for Vercel and tests
 module.exports = app;
